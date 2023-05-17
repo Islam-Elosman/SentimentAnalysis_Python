@@ -33,22 +33,28 @@ def analyze_voice_sentiment():
     """Analyze the sentiment of speech input and return a sentiment label."""
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Say something!")
+        print("Say something!")  # Prompt the user to speak
         audio = recognizer.listen(source)
     try:
         # Recognize speech using the Google Speech Recognition API
         text = recognizer.recognize_google(audio)
-        print("You said:", text)
+        print("Recognized Text:", text)  # Print the recognized text
         # Analyze the sentiment of the recognized text
         label = sentiment_analysis(text)
+        print("Sentiment Label:", label)  # Print the sentiment label
     except sr.UnknownValueError:
-        print("Google Speech Recognition could not understand audio")
-        label = 'unknown'
+        print("Google Speech Recognition could not understand audio")  # Handle speech recognition errors
     except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
-        label = 'unknown'
-    return label
+        print("Could not request results from Google Speech Recognition service; {0}".format(e))  # Handle speech recognition errors
 
-# Test the sentiment analysis function with voice input
-sentiment_label = analyze_voice_sentiment()
-print("The sentiment of the audio file is:", sentiment_label)
+# Chat-like interaction
+print("Press Enter next to the \">\" to start and type \"exit\" to end the chat.")
+while True:
+    user_input = input("> ")  # Prompt for user input
+    if user_input.lower() == "exit":
+        print("Chat ended.")
+        break
+    else:
+        analyze_voice_sentiment()
+
+
